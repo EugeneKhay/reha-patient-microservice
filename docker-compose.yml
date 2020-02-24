@@ -1,0 +1,35 @@
+version: "3"
+services:
+  postgres:
+    image: postgres:latest
+    network_mode: bridge
+    container_name: postgres
+    volumes:
+    - postgres-data:/var/lib/postgresql/data
+    expose:
+      - 5432
+      - 54320
+    ports:
+    - 54320:5432
+    environment:
+      - POSTGRES_PASSWORD=papercut
+      - POSTGRES_DB=reha-patients
+    restart: unless-stopped
+
+  spring:
+    image: reha-new
+    network_mode: bridge
+    container_name: reha-patients-new
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres/reha-patients
+    expose:
+      - 8080
+    ports:
+    - 8080:8080
+    depends_on:
+      - postgres
+    links:
+      - postgres
+
+volumes:
+  postgres-data:
