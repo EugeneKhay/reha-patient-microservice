@@ -8,7 +8,6 @@ import org.simplejavamail.api.email.Email;
 import org.simplejavamail.api.mailer.Mailer;
 import org.simplejavamail.email.EmailBuilder;
 import org.simplejavamail.mailer.MailerBuilder;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +25,6 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public List<Patient> getAllPatients() {
-        //sendEmail();
         return patientRepository.findAll();
     }
 
@@ -56,7 +54,6 @@ public class PatientServiceImpl implements PatientService {
         if (patientDTO.getDoctor() != null) patient.setDoctor(patientDTO.getDoctor());
         if (patientDTO.getInsuranceNumber() != null) patient.setInsuranceNumber(patientDTO.getInsuranceNumber());
         if (patientDTO.getStatus() != null) patient.setStatus(patientDTO.getStatus());
-        //BeanUtils.copyProperties(patientDTO, patient, "id", "patientID");
         return patientRepository.save(patient);
     }
 

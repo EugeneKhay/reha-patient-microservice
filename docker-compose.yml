@@ -16,7 +16,7 @@ services:
       - POSTGRES_DB=reha-patients
     restart: unless-stopped
 
-  spring:
+  patient:
     image: reha-new
     network_mode: bridge
     container_name: reha-patients-new
@@ -25,11 +25,24 @@ services:
     expose:
       - 8080
     ports:
-    - 8080:8080
+      - 8080:8080
     depends_on:
       - postgres
+      - eureka
     links:
       - postgres
+      - eureka
+
+  eureka:
+    image: eureka
+    network_mode: bridge
+    container_name: eureka
+    expose:
+      - 8010
+      - 8761
+    ports:
+    - 8010:8010
+    - 8761:8761
 
 volumes:
   postgres-data:
